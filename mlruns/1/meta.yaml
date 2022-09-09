@@ -1,0 +1,4 @@
+artifact_location: file:///Users/romuloamaral/Documents/projects/evento_deploy_aws/aws-evento-deploy-test/mlruns/1
+experiment_id: '1'
+lifecycle_stage: active
+name: iris-demo

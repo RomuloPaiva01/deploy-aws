@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/romuloamaral/Documents/projects/evento_deploy_aws/aws-evento-deploy-test/mlruns/1/960455ff137c4ef8b8cf3db02ba389d3/artifacts
+end_time: 1662214185340
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+name: ''
+run_id: 960455ff137c4ef8b8cf3db02ba389d3
+run_uuid: 960455ff137c4ef8b8cf3db02ba389d3
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1662214183748
+status: 3
+tags: []
+user_id: romuloamaral

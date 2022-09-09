@@ -1,0 +1,19 @@
+MLFLOW:
+    MODEL_URI: mlruns/1/960455ff137c4ef8b8cf3db02ba389d3/artifacts/random-forest-model/
+    MODE: create
+
+AWS_BASIC_CONFIG:
+    REGION: eu-west-1
+    AWS_ID: 'your-account-number'
+
+SAGEMAKER_CONFIG:
+    ROLE: 'your-role'
+    APP_NAME: iris-demo
+    TAG_ID: 1.28.0
+    INSTANCE_MODEL: ml.m5.large
+
+S3:
+    BUCKET: 'your-bucket'
+
+ECR:
+    REPO: 'your-ecr-repo'

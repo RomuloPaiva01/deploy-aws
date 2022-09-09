@@ -1,0 +1,35 @@
+version: 0.2
+
+env:
+  variables:
+    RUN_ID: '960455ff137c4ef8b8cf3db02ba389d3'
+    MODEL_TYPE: "random-forest-model"
+    ID_EXP: '1'
+    TAG_ID: '1.28.0'
+    REGION: 'eu-west-1'
+    AWS_ACCOUNT: 'your-account-number'
+    ECR_REPO: 'mlflow-pyfunc'
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.10
+    commands:
+      - pip install pandas boto3 pyyaml sklearn sagemaker mlflow==1.28.0
+      - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay& # initialize docker deamon
+      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
+  pre_build:
+    commands:
+      - export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+      - export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+      - aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com #login into aws
+      - REPO_URL=$AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com/$ECR_REPO:$TAG_ID
+  build:
+    on-failure: ABORT
+    commands:
+      #- python -m unittest discover tests # inside unittest it should create the endpoint locally and test it
+      - (cd mlruns/$ID_EXP/$RUN_ID/artifacts/$MODEL_TYPE/ ; mlflow sagemaker build-and-push-container --build --push) # push image to ecr
+  post_build:
+    on-failure: ABORT
+    commands:
+      - python deploy.py # deploy model as a sagemaker endpoint

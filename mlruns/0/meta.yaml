@@ -1,0 +1,4 @@
+artifact_location: file:///Users/romuloamaral/Documents/projects/evento_deploy_aws/aws-evento-deploy-test/mlruns/0
+experiment_id: '0'
+lifecycle_stage: active
+name: Default
